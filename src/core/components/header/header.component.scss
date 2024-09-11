@@ -1,0 +1,40 @@
+.header-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-toolbar {
+  height: 50px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: slateblue !important;
+}
+
+mat-toolbar .logo {
+  height: 70%;
+  max-height: 70%;
+  width: auto;
+}
+
+.custom-disabled {
+  pointer-events: none;
+  opacity: 1;
+}
+
+.header-left {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}

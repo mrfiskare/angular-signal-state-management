@@ -1,0 +1,40 @@
+/* Custom breakpoints to match Bootstrap grid system */
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+.dialog-wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.dialog-content {
+  max-height: 200px;
+}
+
+@media (max-width: $breakpoint-sm - 1) {
+  .dialog-wrapper {
+    width: 100vw;
+  }
+}
+
+@media (min-width: $breakpoint-sm) and (max-width: $breakpoint-md - 1) {
+  .dialog-wrapper {
+    width: 98vw;
+  }
+}
+
+@media (min-width: $breakpoint-md) and (max-width: $breakpoint-lg - 1) {
+  .dialog-wrapper {
+    width: 70vw;
+  }
+}
+
+@media (min-width: $breakpoint-lg) {
+  .dialog-wrapper {
+    width: 50vw;
+    max-width: 600px;
+  }
+}

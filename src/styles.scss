@@ -1,10 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
-
 html,
 body {
   height: 100%;
+  width: 100%;
+  min-width: 375px;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+div.row {
+  width: 100%;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: #aaaaaa;
+}
+
+@-moz-document url-prefix() {
+  * {
+    scrollbar-color: #aaaaaa transparent;
+    scrollbar-width: thin;
+  }
+}
+
+.disabled-btn {
+  pointer-events: none;
+  opacity: 1;
 }
