@@ -1,1 +1,27 @@
-<p>home works!</p>
+<div
+  class="container d-flex justify-content-center align-items-center"
+  style="height: 100% !important"
+>
+  <div class="row">
+    <div class="col-12 d-flex flex-column align-items-center">
+      <!-- Button 1 -->
+      <button
+        mat-raised-button
+        color="primary"
+        class="mb-3 w-100"
+        (click)="navigateTo('new-order')"
+      >
+        New Order
+      </button>
+      <!-- Button 2 -->
+      <button
+        mat-raised-button
+        color="accent"
+        class="mb-3 w-100"
+        (click)="navigateTo('my-orders')"
+      >
+        My Orders
+      </button>
+    </div>
+  </div>
+</div>
