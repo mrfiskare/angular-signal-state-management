@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { LoaderService } from '../../services/loader.service';

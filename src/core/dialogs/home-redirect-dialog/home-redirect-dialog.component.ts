@@ -9,7 +9,7 @@ import {
 import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'utk-home-container-redirect-dialog',
+  selector: 'app-home-redirect-dialog',
   standalone: true,
   imports: [
     MatDialogTitle,
