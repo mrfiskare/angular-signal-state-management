@@ -8,8 +8,8 @@ as a State Management Solution.
 ## Requirements:
 
 | Name               | Version |
-| ------------------ | ------- |
-| Angular CLI        | 18.0.5  |
+| ------------------ |---------|
+| Angular CLI        | 18.2.3  |
 | Node               | 20.14.0 |
 | npm                | 10.7.0  |
 | TypeScript         | 5.4.2   |
