@@ -8,7 +8,7 @@ as a State Management Solution.
 ## Requirements:
 
 | Name               | Version |
-| ------------------ |---------|
+| ------------------ | ------- |
 | Angular CLI        | 18.2.3  |
 | Node               | 20.14.0 |
 | npm                | 10.7.0  |
@@ -106,4 +106,3 @@ Open your VS Code settings (Ctrl/Cmd + ,), and add or modify the following setti
   "eslint.validate": ["typescript"]
 }
 ```
-
