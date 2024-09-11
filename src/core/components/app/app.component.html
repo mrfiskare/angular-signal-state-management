@@ -1,5 +1,4 @@
 <app-spinner></app-spinner>
-<<<<<<< Updated upstream
 <app-header (toggleSidenav)="sidenav.toggle()"></app-header>
 <mat-sidenav-container class="outer-wrapper">
   <mat-sidenav position="end" #sidenav mode="over">
@@ -10,18 +9,6 @@
         aria-label="Example icon-button with logout icon"
         style="width: 100%"
         (click)="callRedirectToHome()"
-=======
-<app-header (toggleSidenav)='sidenav.toggle()'></app-header>
-<mat-sidenav-container class='outer-wrapper'>
-  <mat-sidenav position='end' #sidenav mode='over'>
-    <mat-list-item>
-      <button
-        mat-raised-button
-        color='accent'
-        aria-label='Example icon-button with logout icon'
-        style='width: 100%'
-        (click)='callRedirectToHome()'
->>>>>>> Stashed changes
       >
         <mat-icon>home</mat-icon>
         <span>Home</span>
@@ -29,13 +16,8 @@
     </mat-list-item>
   </mat-sidenav>
 
-<<<<<<< Updated upstream
   <mat-sidenav-content class="sidenav-content">
     <div class="inner-wrapper">
-=======
-  <mat-sidenav-content class='sidenav-content'>
-    <div class='inner-wrapper'>
->>>>>>> Stashed changes
       <router-outlet />
     </div>
   </mat-sidenav-content>
