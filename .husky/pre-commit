@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Current working directory: $(pwd)"
+# Run the stash script
+./pretty-lint-stash.sh
