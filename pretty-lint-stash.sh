@@ -1,13 +1,20 @@
 #!/usr/bin/env sh
 
-# Stash unselected changes
-git stash push -k -u -m "Temporary stash by Husky"
+# Get list of unstaged files
+unstaged_files=$(git diff --name-only)
+
+# Stash only unstaged files
+if [ -n "$unstaged_files" ]; then
+    git stash push -u -m "Temporary stash by Husky" $unstaged_files
+fi
 
 # Run the original pretty-lint script
 npm run pretty-lint
 
 # Pop the stash to restore changes
-git stash pop
+if [ -n "$unstaged_files" ]; then
+    git stash pop
+fi
 
 # Check if there were conflicts
 if [ $? -ne 0 ]; then
