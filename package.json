@@ -3,9 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "start:dev": "ng serve --configuration development",
+    "build:dev": "ng build --configuration development",
+    "watch:dev": "ng build --watch --configuration development",
     "start": "ng serve",
+    "prepare:prod": "bash update-prod-dependency.sh",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "prettier": "npx prettier --write .",
+    "lint": "ng lint",
+    "lint:fix": "ng lint --fix",
+    "pretty-lint": "npm run prettier && git add . && npm run lint",
+    "prepare": "husky install",
     "test": "ng test"
   },
   "private": true,
@@ -27,12 +35,15 @@
     "@angular/cli": "^18.2.3",
     "@angular/compiler-cli": "^18.2.0",
     "@types/jasmine": "~5.1.0",
+    "angular-eslint": "18.3.0",
+    "eslint": "^9.9.0",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.5.2"
+    "typescript": "~5.5.2",
+    "typescript-eslint": "8.1.0"
   }
 }
