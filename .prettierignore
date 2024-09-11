@@ -1,0 +1,41 @@
+# Ignore build and output directories
+/dist
+/out
+
+# Ignore configuration files
+/.editorconfig
+/tsconfig.json
+/tsconfig.*.json
+/tslint.json
+/angular.json
+
+# Ignore generated files and directories
+/.ng
+/ngsw-config.json
+/node_modules
+
+# Ignore testing files and directories
+/karma.conf.js
+/protractor.conf.js
+/jest.config.js
+/test.ts
+
+# Ignore code coverage reports
+/coverage
+
+# Ignore dependency lock files
+/package-lock.json
+/yarn.lock
+
+# Ignore third-party configuration files
+/.prettierrc
+/.eslintrc
+/.stylelintrc
+
+# Ignore IDE-specific files
+/.vscode
+.idea
+
+# Ignore documentation and build scripts
+/docs
+/build
