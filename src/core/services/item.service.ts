@@ -77,4 +77,32 @@ export class ItemService {
     const url = `${this.apiUrl}/reset`;
     return this.http.post<void>(url, {}, this.httpOptions);
   }
+
+  /**
+   * Get the list of purchased items from the API.
+   * @returns {Observable<Item[]>} Observable stream of purchased items.
+   */
+  getPurchasedItems(): Observable<Item[]> {
+    const url = `${this.apiUrl}/purchased`;
+    return this.http.get<Item[]>(url);
+  }
+
+  /**
+   * Add a new purchased item to the API.
+   * @param {Item} item - The item to be purchased.
+   * @returns {Observable<Item>} Observable stream of the purchased item.
+   */
+  addPurchasedItem(item: Item): Observable<Item> {
+    const url = `${this.apiUrl}/purchased`;
+    return this.http.post<Item>(url, item, this.httpOptions);
+  }
+
+  /**
+   * Clear the list of purchased items in the API.
+   * @returns {Observable<void>} Observable for the clear action.
+   */
+  clearPurchasedItems(): Observable<void> {
+    const url = `${this.apiUrl}/purchased`;
+    return this.http.delete<void>(url, this.httpOptions);
+  }
 }

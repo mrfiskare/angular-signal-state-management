@@ -117,4 +117,31 @@ export class ItemsService {
   resetItems(): void {
     this.items = [...this.initialItems];
   }
+
+  private purchasedItems: Item[] = [];
+
+  /**
+   * Get all purchased items.
+   * @returns {Item[]} Array of purchased items.
+   */
+  getPurchasedItems(): Item[] {
+    return this.purchasedItems;
+  }
+
+  /**
+   * Add an item to the purchased items list.
+   * @param {Item} item - The item to add to purchased items.
+   * @returns {Item} The added item.
+   */
+  addPurchasedItem(item: Item): Item {
+    this.purchasedItems.push(item);
+    return item;
+  }
+
+  /**
+   * Clear all purchased items.
+   */
+  clearPurchasedItems(): void {
+    this.purchasedItems = [];
+  }
 }

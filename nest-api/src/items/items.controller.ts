@@ -43,4 +43,19 @@ export class ItemsController {
   resetItems(): void {
     this.itemsService.resetItems();
   }
+
+  @Get('purchased')
+  getPurchasedItems(): Item[] {
+    return this.itemsService.getPurchasedItems();
+  }
+
+  @Post('purchased')
+  addPurchasedItem(@Body() item: Item): Item {
+    return this.itemsService.addPurchasedItem(item);
+  }
+
+  @Delete('purchased')
+  clearPurchasedItems(): void {
+    this.itemsService.clearPurchasedItems();
+  }
 }
