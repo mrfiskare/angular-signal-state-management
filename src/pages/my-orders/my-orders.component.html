@@ -1,1 +1,24 @@
-<p>my-orders works!</p>
+<!-- item-list.component.html -->
+<div class="container mt-4">
+  <h2>My purchases</h2>
+  <div class="row">
+    <div class="col-md-4 mb-3" *ngFor="let item of state.purchasedItems()">
+      <mat-card>
+        <mat-card-header class="pb-4">
+          <mat-card-title>{{ item.name }}</mat-card-title>
+          <mat-card-subtitle>Price: ${{ item.price }}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="row justify-content-center align-content-center">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="state.clearPurchasedItems()"
+    >
+      Revert ALL purchases
+    </button>
+  </div>
+</div>

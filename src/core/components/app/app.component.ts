@@ -13,11 +13,11 @@ import {
 } from '@angular/material/sidenav';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
-import { MatDialog } from '@angular/material/dialog';
 import { HeaderComponent } from '../header/header.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { StateService } from '../../services/state.service';
 
 @Component({
   selector: 'app-root',
@@ -48,7 +48,8 @@ import { SpinnerComponent } from '../spinner/spinner.component';
     MatMenuItem,
     NgForOf,
     MatMenuTrigger,
-    SpinnerComponent
+    SpinnerComponent,
+    JsonPipe
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -59,7 +60,7 @@ export class AppComponent implements OnInit {
   @ViewChild(HeaderComponent) headerComponent: HeaderComponent =
     {} as HeaderComponent;
 
-  constructor(protected dialog: MatDialog) {}
+  constructor(protected state: StateService) {}
 
   ngOnInit() {
     const spinner = document.getElementById('loading-spinner');
