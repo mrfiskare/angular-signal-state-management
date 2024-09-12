@@ -25,11 +25,20 @@
       <!-- Button 3 -->
       <button
         mat-raised-button
-        color="accent"
+        color="primary"
         class="mb-3 w-100"
         (click)="navigateTo('manage')"
       >
         Manage available items
+      </button>
+      <!-- Button 3 -->
+      <button
+        mat-raised-button
+        color="warn"
+        class="mb-3 w-100"
+        (click)="state.resetState()"
+      >
+        Reset everything
       </button>
     </div>
   </div>
