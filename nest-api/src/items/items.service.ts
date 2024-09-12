@@ -7,10 +7,9 @@ export class ItemsService {
   private initialItems: Item[] = [
     {
       id: 1,
-      name: 'Book 1',
+      name: 'Harry Potter',
       category: 'Books',
       price: 10,
-      count: 5,
       isNew: true,
     },
     {
@@ -18,7 +17,6 @@ export class ItemsService {
       name: 'Toy 1',
       category: 'Toys',
       price: 15,
-      count: 3,
       isNew: false,
     },
     {
@@ -26,7 +24,6 @@ export class ItemsService {
       name: 'Shirt',
       category: 'Clothes',
       price: 20,
-      count: 10,
       isNew: true,
     },
     {
@@ -34,7 +31,6 @@ export class ItemsService {
       name: 'Book 2',
       category: 'Books',
       price: 12,
-      count: 4,
       isNew: false,
     },
     {
@@ -42,7 +38,6 @@ export class ItemsService {
       name: 'Toy 2',
       category: 'Toys',
       price: 18,
-      count: 7,
       isNew: true,
     },
     {
@@ -50,7 +45,6 @@ export class ItemsService {
       name: 'Pants',
       category: 'Clothes',
       price: 25,
-      count: 6,
       isNew: false,
     },
     {
@@ -58,15 +52,13 @@ export class ItemsService {
       name: 'Laptop',
       category: 'Electronics',
       price: 1000,
-      count: 2,
       isNew: true,
     },
     {
       id: 8,
-      name: 'Phone',
+      name: 'MacBook',
       category: 'Electronics',
       price: 800,
-      count: 3,
       isNew: false,
     },
     {
@@ -74,7 +66,6 @@ export class ItemsService {
       name: 'Jacket',
       category: 'Clothes',
       price: 50,
-      count: 8,
       isNew: true,
     },
     {
@@ -82,7 +73,6 @@ export class ItemsService {
       name: 'Table',
       category: 'Furniture',
       price: 150,
-      count: 1,
       isNew: false,
     },
   ];
@@ -90,13 +80,17 @@ export class ItemsService {
   // Type the items array explicitly as Item[]
   private items: Item[] = [...this.initialItems];
 
+  constructor() {
+    this.items = this.initialItems;
+  }
+
   getItems(): Item[] {
     // Make sure the return type is always Item[]
     return this.items;
   }
 
   getItemById(id: number): Item | undefined {
-    return this.items.find((item) => item.id === id);
+    return this.items.find((item) => item.id === +id);
   }
 
   addItem(newItem: Item): void {
@@ -125,6 +119,7 @@ export class ItemsService {
    * @returns {Item[]} Array of purchased items.
    */
   getPurchasedItems(): Item[] {
+    console.log('get purchase', this.purchasedItems);
     return this.purchasedItems;
   }
 
@@ -135,6 +130,7 @@ export class ItemsService {
    */
   addPurchasedItem(item: Item): Item {
     this.purchasedItems.push(item);
+    console.log('add purchase', this.purchasedItems);
     return item;
   }
 

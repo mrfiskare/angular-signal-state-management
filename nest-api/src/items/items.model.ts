@@ -3,6 +3,5 @@ export interface Item {
   name: string;
   category: string; // books, toys, clothes, etc.
   price: number;
-  count: number;
   isNew: boolean;
 }

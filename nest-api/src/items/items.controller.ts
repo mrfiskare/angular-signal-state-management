@@ -19,7 +19,7 @@ export class ItemsController {
     return this.itemsService.getItems();
   }
 
-  @Get(':id')
+  @Get('id/:id')
   getItemById(@Param('id') id: number): Item {
     return <Item>this.itemsService.getItemById(id);
   }
@@ -29,12 +29,12 @@ export class ItemsController {
     this.itemsService.addItem(newItem);
   }
 
-  @Put(':id')
+  @Put('id/:id')
   updateItem(@Param('id') id: number, @Body() updatedItem: Item): void {
     this.itemsService.updateItem(id, updatedItem);
   }
 
-  @Delete(':id')
+  @Delete('id/:id')
   deleteItem(@Param('id') id: number): void {
     this.itemsService.deleteItem(id);
   }
