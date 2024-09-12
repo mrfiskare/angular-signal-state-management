@@ -37,8 +37,8 @@ export class StateService {
   public localOnlyData = computed(() => this.state().localOnlyData);
   public moneySpent = computed(() => {
     let sum = 0;
-    for (let index = 0; index < this.state().purchasedItems.length; index++) {
-      sum += this.state().purchasedItems[index].price;
+    for (const item of this.state().purchasedItems) {
+      sum += item.price;
     }
     return sum;
   });
@@ -55,7 +55,6 @@ export class StateService {
     this.loaderService.showLoader();
     this.itemService.getItems().subscribe({
       next: (items: Item[]) => {
-        console.log('items: ', items);
         this.setAvailableItems(items); // Reducer
         this.loaderService.hideLoader();
       },
@@ -71,7 +70,6 @@ export class StateService {
     this.loaderService.showLoader();
     this.itemService.getPurchasedItems().subscribe({
       next: (items: Item[]) => {
-        console.log('purchased: ', items);
         this.setPurchasedItems(items); // Reducer
         this.loaderService.hideLoader();
       },

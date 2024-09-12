@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, takeUntil } from 'rxjs';
 import { HomeRedirectDialogComponent } from '../../dialogs/home-redirect-dialog/home-redirect-dialog.component';
+import { StateService } from '../../services/state.service';
 
 @Component({
   selector: 'app-header',
@@ -39,7 +40,8 @@ export class HeaderComponent implements OnDestroy {
   constructor(
     private router: Router,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    protected state: StateService
   ) {}
 
   public ngOnDestroy(): void {
