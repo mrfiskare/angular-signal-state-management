@@ -35,7 +35,7 @@ export class ItemService {
    * @returns {Observable<Item>} Observable stream of the fetched item.
    */
   public getItemById(id: number): Observable<Item> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl}/id/${id}`;
     return this.http.get<Item>(url);
   }
 
@@ -55,7 +55,7 @@ export class ItemService {
    * @returns {Observable<void>} Observable for the completion of the update operation.
    */
   public updateItem(id: number, item: Item): Observable<void> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl}/id/${id}`;
     return this.http.put<void>(url, item, this.httpOptions);
   }
 
@@ -65,7 +65,7 @@ export class ItemService {
    * @returns {Observable<void>} Observable for the completion of the delete operation.
    */
   public deleteItem(id: number): Observable<void> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl}/id/${id}`;
     return this.http.delete<void>(url, this.httpOptions);
   }
 

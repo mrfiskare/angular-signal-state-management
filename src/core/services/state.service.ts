@@ -1,10 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ItemService } from './item.service';
 import { GlobalState } from '../models/state.model';
 import { Item } from '../models/item.model';
-import { Subject, take } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoaderService } from './loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +11,6 @@ export class StateService {
   // ---------------------------------------
   // Services
   // ---------------------------------------
-  private http = inject(HttpClient);
   private itemService = inject(ItemService);
 
   // ---------------------------------------
@@ -22,10 +19,13 @@ export class StateService {
   private state = signal<GlobalState>({
     isLoading: false,
     availableItems: [] as Item[],
-    purchasedItems: [] as Item[]
+    purchasedItems: [] as Item[],
+    localOnlyData: ''
   });
 
-  constructor() {}
+  constructor(private loaderService: LoaderService) {
+    this.loadAvailableItems();
+  }
 
   // ---------------------------------------
   // State Selectors (like Redux selectors)
@@ -34,6 +34,14 @@ export class StateService {
   public isLoading = computed(() => this.state().isLoading);
   public availableItems = computed(() => this.state().availableItems);
   public purchasedItems = computed(() => this.state().purchasedItems);
+  public localOnlyData = computed(() => this.state().localOnlyData);
+  public moneySpent = computed(() => {
+    let sum = 0;
+    for (let index = 0; index < this.state().purchasedItems.length; index++) {
+      sum += this.state().purchasedItems[index].price;
+    }
+    return sum;
+  });
 
   // ---------------------------------------
   // Actions (Like NGRX Actions)
@@ -44,17 +52,15 @@ export class StateService {
    * @effect
    */
   loadAvailableItems(): void {
-    this.setLoading(true);
-    this.itemService
-      .getItems()
-      .pipe(takeUntilDestroyed())
-      .subscribe({
-        next: (items: Item[]) => {
-          this.setAvailableItems(items); // Reducer
-          this.setLoading(false);
-        },
-        error: () => this.setLoading(false)
-      });
+    this.loaderService.showLoader();
+    this.itemService.getItems().subscribe({
+      next: (items: Item[]) => {
+        console.log('items: ', items);
+        this.setAvailableItems(items); // Reducer
+        this.loaderService.hideLoader();
+      },
+      error: () => this.loaderService.hideLoader()
+    });
   }
 
   /**
@@ -62,17 +68,15 @@ export class StateService {
    * @effect
    */
   loadPurchasedItems(): void {
-    this.setLoading(true);
-    this.itemService
-      .getPurchasedItems()
-      .pipe(takeUntilDestroyed())
-      .subscribe({
-        next: (items: Item[]) => {
-          this.setPurchasedItems(items); // Reducer
-          this.setLoading(false);
-        },
-        error: () => this.setLoading(false)
-      });
+    this.loaderService.showLoader();
+    this.itemService.getPurchasedItems().subscribe({
+      next: (items: Item[]) => {
+        console.log('purchased: ', items);
+        this.setPurchasedItems(items); // Reducer
+        this.loaderService.hideLoader();
+      },
+      error: () => this.loaderService.hideLoader()
+    });
   }
 
   /**
@@ -81,19 +85,16 @@ export class StateService {
    * @effect
    */
   purchaseItem(item: Item): void {
-    this.setLoading(true);
-    this.itemService
-      .addPurchasedItem(item)
-      .pipe(takeUntilDestroyed())
-      .subscribe({
-        next: () => {
-          // After the purchase, reload the available items and purchased items from the server
-          this.loadAvailableItems(); // Effect
-          this.loadPurchasedItems(); // Effect
-          this.setLoading(false);
-        },
-        error: () => this.setLoading(false)
-      });
+    this.loaderService.showLoader();
+    this.itemService.addPurchasedItem(item).subscribe({
+      next: () => {
+        // After the purchase, reload the available items and purchased items from the server
+        this.loadAvailableItems(); // Effect
+        this.loadPurchasedItems(); // Effect
+        this.loaderService.hideLoader();
+      },
+      error: () => this.loaderService.hideLoader()
+    });
   }
 
   /**
@@ -101,17 +102,17 @@ export class StateService {
    * @effect
    */
   clearPurchasedItems(): void {
-    this.setLoading(true);
+    this.loaderService.showLoader();
     this.itemService
       .clearPurchasedItems()
-      .pipe(takeUntilDestroyed())
+
       .subscribe({
         next: () => {
           // After clearing, reload the purchased items from the server
           this.loadPurchasedItems(); // Effect
-          this.setLoading(false);
+          this.loaderService.hideLoader();
         },
-        error: () => this.setLoading(false)
+        error: () => this.loaderService.hideLoader()
       });
   }
 
@@ -120,48 +121,42 @@ export class StateService {
    * @effect
    */
   resetState(): void {
-    this.setLoading(true);
+    this.loaderService.showLoader();
 
     // Clear purchased items from the server
     this.itemService
       .clearPurchasedItems()
-      .pipe(takeUntilDestroyed())
+
       .subscribe({
         next: () => {
           // Reset available items on the server
           this.itemService
             .resetItems()
-            .pipe(takeUntilDestroyed())
+
             .subscribe({
               next: () => {
                 // Reset local state after successful API calls
-                this.setAvailableItems([]); // Clear local available items
-                this.setPurchasedItems([]); // Clear local purchased items
+                this.setAvailableItems([] as Item[]); // Clear local available items
+                this.setPurchasedItems([] as Item[]); // Clear local purchased items
                 this.loadAvailableItems(); // Effect
                 this.loadPurchasedItems(); // Effect
-                this.setLoading(false);
+
+                // Reset the local only data
+                this.setLocalOnlyData('');
+
+                // Hide the loader
+                this.loaderService.hideLoader();
               },
-              error: () => this.setLoading(false)
+              error: () => this.loaderService.hideLoader()
             });
         },
-        error: () => this.setLoading(false)
+        error: () => this.loaderService.hideLoader()
       });
   }
 
   // ---------------------------------------
   // Reducers (like NGRX reducers)
   // ---------------------------------------
-
-  /**
-   * Reducer to update the loading state.
-   * @param {boolean} isLoading - The new loading state.
-   */
-  private setLoading(isLoading: boolean): void {
-    this.state.update((state) => ({
-      ...state,
-      isLoading
-    }));
-  }
 
   /**
    * Reducer to set the available items in the global state.
@@ -182,6 +177,17 @@ export class StateService {
     this.state.update((state) => ({
       ...state,
       purchasedItems: items
+    }));
+  }
+
+  /**
+   * Reducer to set the local only data in the global state.
+   * @param {string} data - The new local only data.
+   */
+  private setLocalOnlyData(data: string): void {
+    this.state.update((state) => ({
+      ...state,
+      localOnlyData: data
     }));
   }
 }

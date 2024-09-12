@@ -4,4 +4,5 @@ export interface GlobalState {
   isLoading: boolean;
   availableItems: Item[];
   purchasedItems: Item[];
+  localOnlyData: string;
 }
