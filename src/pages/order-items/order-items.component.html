@@ -4,10 +4,14 @@
   <div class="row">
     <div class="col-md-4 mb-4" *ngFor="let item of state.availableItems()">
       <mat-card>
-        <mat-card-header class="pb-4">
+        <mat-card-header>
           <mat-card-title>{{ item.name }}</mat-card-title>
           <mat-card-subtitle>Price: ${{ item.price }}</mat-card-subtitle>
         </mat-card-header>
+        <mat-card-content class="py-4"
+          >Id: {{ item.id }}, Category: {{ item.category }} , new:
+          {{ item.isNew }}</mat-card-content
+        >
         <mat-card-actions>
           <button
             mat-raised-button

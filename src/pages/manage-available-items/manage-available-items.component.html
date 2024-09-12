@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="row py-4">
+    <!-- Form for adding a new item -->
+    <div class="col-md-6">
+      <form [formGroup]="itemForm" (ngSubmit)="onAddItem()">
+        <mat-card>
+          <mat-card-title class="m-3">Add New Item</mat-card-title>
+          <mat-card-content>
+            <div class="form-group">
+              <mat-form-field class="example-full-width">
+                <mat-label>Name</mat-label>
+                <input
+                  matInput
+                  formControlName="name"
+                  placeholder="Item name"
+                />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="example-full-width">
+                <mat-label>Category</mat-label>
+                <input
+                  matInput
+                  formControlName="category"
+                  placeholder="Category"
+                />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="example-full-width">
+                <mat-label>Price</mat-label>
+                <input
+                  matInput
+                  formControlName="price"
+                  type="number"
+                  placeholder="Price"
+                />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-checkbox formControlName="isNew">Is New?</mat-checkbox>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit">
+              Add Item
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row pt-4">
+    <div class="col-md-12 pb-3">
+      <mat-card>
+        <mat-card-title class="m-3">Available Items</mat-card-title>
+        <mat-list>
+          <mat-list-item
+            class="mb-2"
+            *ngFor="let item of state.availableItems(); let i = index"
+          >
+            <div class="row">
+              <div class="col-4">
+                <span
+                  >{{ item.name }} - {{ item.category }} ({{
+                    item.price
+                  }}$)</span
+                >
+              </div>
+              <div class="col-2">
+                <button
+                  mat-raised-button
+                  color="warn"
+                  style="height: 20px"
+                  (click)="onDeleteItem(item.name)"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+    </div>
+  </div>
+</div>

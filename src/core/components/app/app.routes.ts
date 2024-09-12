@@ -20,12 +20,12 @@ export const routes: Routes = [
       )
   },
   {
-    path: 'summary',
-    title: 'Summary',
+    path: 'manage',
+    title: 'Manage',
     loadComponent: () =>
-      import('../../../pages/summary/summary.component').then(
-        (m) => m.SummaryComponent
-      )
+      import(
+        '../../../pages/manage-available-items/manage-available-items.component'
+      ).then((m) => m.ManageAvailableItemsComponent)
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }

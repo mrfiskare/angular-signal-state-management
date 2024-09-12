@@ -31,7 +31,6 @@ export class StateService {
   // State Selectors (like Redux selectors)
   // ---------------------------------------
 
-  public isLoading = computed(() => this.state().isLoading);
   public availableItems = computed(() => this.state().availableItems);
   public purchasedItems = computed(() => this.state().purchasedItems);
   public localOnlyData = computed(() => this.state().localOnlyData);
@@ -89,6 +88,40 @@ export class StateService {
         // After the purchase, reload the available items and purchased items from the server
         this.loadAvailableItems(); // Effect
         this.loadPurchasedItems(); // Effect
+        this.loaderService.hideLoader();
+      },
+      error: () => this.loaderService.hideLoader()
+    });
+  }
+
+  /**
+   * Trigger action to add a new available item via the API and reload item lists.
+   * @param {Item} item - The item to add.
+   * @effect
+   */
+  addNewAvailableItem(item: Item): void {
+    this.loaderService.showLoader();
+    this.itemService.addItem(item).subscribe({
+      next: () => {
+        // After adding the new item, reload the available items from the server
+        this.loadAvailableItems(); // Effect
+        this.loaderService.hideLoader();
+      },
+      error: () => this.loaderService.hideLoader()
+    });
+  }
+
+  /**
+   * Trigger action to delete an available item via the API and reload item lists.
+   * @param {number} id - The id of the item to delete.
+   * @effect
+   */
+  deleteAvailableItem(id: number): void {
+    this.loaderService.showLoader();
+    this.itemService.deleteItem(id).subscribe({
+      next: () => {
+        // After adding deleting the item, reload the available items from the server
+        this.loadAvailableItems(); // Effect
         this.loaderService.hideLoader();
       },
       error: () => this.loaderService.hideLoader()
