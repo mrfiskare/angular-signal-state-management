@@ -66,7 +66,9 @@ export class StateService {
       .subscribe({
         next: (items: Item[]) => {
           this.setAvailableItems(items); // Reducer
-          this.loaderService.hideLoader();
+          setTimeout(() => {
+            this.loaderService.hideLoader();
+          }, 1000);
         },
         error: () => this.loaderService.hideLoader()
       });
@@ -84,7 +86,9 @@ export class StateService {
       .subscribe({
         next: (items: Item[]) => {
           this.setPurchasedItems(items); // Reducer
-          this.loaderService.hideLoader();
+          setTimeout(() => {
+            this.loaderService.hideLoader();
+          }, 1000);
         },
         error: () => this.loaderService.hideLoader()
       });
@@ -105,7 +109,9 @@ export class StateService {
           // After the purchase, reload the available items and purchased items from the server
           this.loadAvailableItems(); // Effect
           this.loadPurchasedItems(); // Effect
-          this.loaderService.hideLoader();
+          setTimeout(() => {
+            this.loaderService.hideLoader();
+          }, 1000);
         },
         error: () => this.loaderService.hideLoader()
       });
@@ -125,7 +131,9 @@ export class StateService {
         next: () => {
           // After adding the new item, reload the available items from the server
           this.loadAvailableItems(); // Effect
-          this.loaderService.hideLoader();
+          setTimeout(() => {
+            this.loaderService.hideLoader();
+          }, 1000);
         },
         error: () => this.loaderService.hideLoader()
       });
@@ -145,7 +153,9 @@ export class StateService {
         next: () => {
           // After adding deleting the item, reload the available items from the server
           this.loadAvailableItems(); // Effect
-          this.loaderService.hideLoader();
+          setTimeout(() => {
+            this.loaderService.hideLoader();
+          }, 1000);
         },
         error: () => this.loaderService.hideLoader()
       });
@@ -165,7 +175,9 @@ export class StateService {
         next: () => {
           // After clearing, reload the purchased items from the server
           this.loadPurchasedItems(); // Effect
-          this.loaderService.hideLoader();
+          setTimeout(() => {
+            this.loaderService.hideLoader();
+          }, 1000);
         },
         error: () => this.loaderService.hideLoader()
       });
@@ -202,7 +214,9 @@ export class StateService {
                 this.setLocalOnlyData('');
 
                 // Hide the loader
-                this.loaderService.hideLoader();
+                setTimeout(() => {
+                  this.loaderService.hideLoader();
+                }, 1000);
               },
               error: () => this.loaderService.hideLoader()
             });
