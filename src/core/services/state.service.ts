@@ -1,13 +1,21 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import {
+  computed,
+  DestroyRef,
+  inject,
+  Injectable,
+  signal
+} from '@angular/core';
 import { ItemService } from './item.service';
 import { GlobalState } from '../models/state.model';
 import { Item } from '../models/item.model';
 import { LoaderService } from './loader.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
+  private destroyRef = inject(DestroyRef);
   // ---------------------------------------
   // Services
   // ---------------------------------------
@@ -52,13 +60,16 @@ export class StateService {
    */
   loadAvailableItems(): void {
     this.loaderService.showLoader();
-    this.itemService.getItems().subscribe({
-      next: (items: Item[]) => {
-        this.setAvailableItems(items); // Reducer
-        this.loaderService.hideLoader();
-      },
-      error: () => this.loaderService.hideLoader()
-    });
+    this.itemService
+      .getItems()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (items: Item[]) => {
+          this.setAvailableItems(items); // Reducer
+          this.loaderService.hideLoader();
+        },
+        error: () => this.loaderService.hideLoader()
+      });
   }
 
   /**
@@ -67,13 +78,16 @@ export class StateService {
    */
   loadPurchasedItems(): void {
     this.loaderService.showLoader();
-    this.itemService.getPurchasedItems().subscribe({
-      next: (items: Item[]) => {
-        this.setPurchasedItems(items); // Reducer
-        this.loaderService.hideLoader();
-      },
-      error: () => this.loaderService.hideLoader()
-    });
+    this.itemService
+      .getPurchasedItems()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (items: Item[]) => {
+          this.setPurchasedItems(items); // Reducer
+          this.loaderService.hideLoader();
+        },
+        error: () => this.loaderService.hideLoader()
+      });
   }
 
   /**
@@ -83,15 +97,18 @@ export class StateService {
    */
   purchaseItem(item: Item): void {
     this.loaderService.showLoader();
-    this.itemService.addPurchasedItem(item).subscribe({
-      next: () => {
-        // After the purchase, reload the available items and purchased items from the server
-        this.loadAvailableItems(); // Effect
-        this.loadPurchasedItems(); // Effect
-        this.loaderService.hideLoader();
-      },
-      error: () => this.loaderService.hideLoader()
-    });
+    this.itemService
+      .addPurchasedItem(item)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          // After the purchase, reload the available items and purchased items from the server
+          this.loadAvailableItems(); // Effect
+          this.loadPurchasedItems(); // Effect
+          this.loaderService.hideLoader();
+        },
+        error: () => this.loaderService.hideLoader()
+      });
   }
 
   /**
@@ -101,14 +118,17 @@ export class StateService {
    */
   addNewAvailableItem(item: Item): void {
     this.loaderService.showLoader();
-    this.itemService.addItem(item).subscribe({
-      next: () => {
-        // After adding the new item, reload the available items from the server
-        this.loadAvailableItems(); // Effect
-        this.loaderService.hideLoader();
-      },
-      error: () => this.loaderService.hideLoader()
-    });
+    this.itemService
+      .addItem(item)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          // After adding the new item, reload the available items from the server
+          this.loadAvailableItems(); // Effect
+          this.loaderService.hideLoader();
+        },
+        error: () => this.loaderService.hideLoader()
+      });
   }
 
   /**
@@ -118,14 +138,17 @@ export class StateService {
    */
   deleteAvailableItem(id: number): void {
     this.loaderService.showLoader();
-    this.itemService.deleteItem(id).subscribe({
-      next: () => {
-        // After adding deleting the item, reload the available items from the server
-        this.loadAvailableItems(); // Effect
-        this.loaderService.hideLoader();
-      },
-      error: () => this.loaderService.hideLoader()
-    });
+    this.itemService
+      .deleteItem(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          // After adding deleting the item, reload the available items from the server
+          this.loadAvailableItems(); // Effect
+          this.loaderService.hideLoader();
+        },
+        error: () => this.loaderService.hideLoader()
+      });
   }
 
   /**
@@ -137,6 +160,7 @@ export class StateService {
     this.itemService
       .clearPurchasedItems()
 
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           // After clearing, reload the purchased items from the server
@@ -158,12 +182,14 @@ export class StateService {
     this.itemService
       .clearPurchasedItems()
 
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           // Reset available items on the server
           this.itemService
             .resetItems()
 
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
               next: () => {
                 // Reset local state after successful API calls

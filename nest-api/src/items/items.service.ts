@@ -106,7 +106,6 @@ export class ItemsService {
 
   deleteItem(id: number): void {
     const idNum = +id;
-    console.log(idNum);
     this.items = this.items.filter((item) => item.id !== idNum);
     this.recalculateIds();
   }
