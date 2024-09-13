@@ -14,8 +14,10 @@
   </div>
 
   <span class="header-spacer"></span>
-  <span class="header-right d-none d-md-flex mat-body-small mx-4"
-    >Spent today: {{ state.moneySpent() }}</span
+  <span
+    class="header-right d-none d-md-flex mat-body-small mx-4 p-2"
+    style="background-color: lightgrey"
+    >Spent today: ${{ state.moneySpent() }}</span
   >
   <div class="header-right d-none d-md-flex">
     <button
